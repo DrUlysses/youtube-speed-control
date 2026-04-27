@@ -67,6 +67,10 @@
                 <input id="speedStep" type="text" value="" />
               </div>
               <div class="row">
+                Preset Speed Buttons (comma-separated, e.g. 1, 1.5, 2)
+                <input id="presetSpeeds" type="text" value="" />
+              </div>
+              <div class="row">
                 <input id="allowMouseWheel" type="checkbox" />
                 Enable Shift+MouseScroll to control playback speed
               </div>
@@ -98,7 +102,6 @@
                     name="displayOption"
                     id="FadeInFadeOut"
                     value="FadeInFadeOut"
-                    checked
                   />Hide/Show Playback Panel
                   <p><img src="YPSCDisplayOptionHideShow.jpg" /></p>
                 </div>
@@ -115,6 +118,15 @@
                   <input type="radio" name="displayOption" id="None" value="None" />Never
                   Display Playback Panel
                   <p><img src="YPSCDisplayOptionNone.jpg" /></p>
+                </div>
+                <div class="col">
+                  <input
+                    type="radio"
+                    name="displayOption"
+                    id="InPlayerControls"
+                    value="InPlayerControls"
+                    checked
+                  />Mount inside YouTube player controls (next to settings/fullscreen)
                 </div>
               </div>
 

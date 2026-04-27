@@ -46,7 +46,10 @@
   border-bottom-left-radius: 5px;
 }
 
-.ysc-btn-right {
+/* .ysc-btn-right intentionally has no rounded corners; the rightmost preset
+   button gets them via .ysc-btn-preset-last instead. */
+
+.ysc-btn-preset-last {
   -moz-border-radius-topright: 5px;
   -webkit-border-top-right-radius: 5px;
   border-top-right-radius: 5px;
@@ -74,6 +77,80 @@
   float: right;
   background: rgba(255, 255, 255, 0.5);
   padding: 0 10px;
+}
+
+.ysc-btn-preset {
+  float: right;
+  background: rgba(255, 255, 255, 0.5);
+  color: #000000;
+  padding: 0 10px;
+  margin: 0;
+}
+
+.ysc-btn-preset:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* In-player-controls mode: render inline next to YouTube's settings/fullscreen
+   buttons inside .ytp-right-controls. */
+.PlayBackRatePanelInPlayer {
+  position: static;
+  right: auto;
+  top: auto;
+  height: 100%;
+  display: inline-flex;
+  align-items: center;
+  vertical-align: top;
+  margin: 0 4px;
+  background: transparent;
+}
+
+.PlayBackRatePanelInPlayer .ysc-btn {
+  float: none;
+  background: transparent;
+  color: #fff;
+  height: 24px;
+  line-height: 24px;
+  padding: 0 6px;
+  margin: 0 1px;
+  border: 0;
+  border-radius: 3px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.PlayBackRatePanelInPlayer .ysc-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.PlayBackRatePanelInPlayer #PlayBackRate {
+  width: auto;
+  min-width: 36px;
+  background: rgba(0, 0, 0, 0.0);
+  border: 0;
+}
+
+.PlayBackRatePanelInPlayer .ysc-btn-preset {
+  background: rgba(0, 0, 0, 0.4);
+  border: 0;
+}
+
+.PlayBackRatePanelInPlayer .ysc-btn-preset:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.PlayBackRatePanelInPlayer #SpeedDown,
+.PlayBackRatePanelInPlayer #SpeedUp {
+  float: none;
+  background: transparent;
+  color: #fff;
+  padding: 0 14px;
+  min-width: 28px;
+}
+
+.PlayBackRatePanelInPlayer #SpeedDown:hover,
+.PlayBackRatePanelInPlayer #SpeedUp:hover {
+  background: rgba(255, 255, 255, 0.15);
 }
 
 #PlayBackRate {

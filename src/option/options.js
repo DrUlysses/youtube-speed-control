@@ -3,10 +3,11 @@ var defaultStorage = {
   slowerKeyCode: '109,189,173',
   fasterKeyCode: '107,187,61',
   resetKeyCode: '106',
-  displayOption: 'FadeInFadeOut',
+  displayOption: 'InPlayerControls',
   allowMouseWheel: true,
   mouseInvert: false,
   rememberSpeed: false,
+  presetSpeeds: '1.5, 2',
 }
 
 function keyPressHandler(event) {
@@ -26,6 +27,7 @@ function onSave() {
   var allowMouseWheel = document.getElementById('allowMouseWheel').checked
   var mouseInvert = document.getElementById('mouseInvert').checked
   var rememberSpeed = document.getElementById('rememberSpeed').checked
+  var presetSpeedsRaw = document.getElementById('presetSpeeds').value
   var displayOption = document.getElementsByName('displayOption')
 
   for (var i = 0, length = displayOption.length; i < length; i++) {
@@ -37,6 +39,13 @@ function onSave() {
 
   speedStep = isNaN(speedStep) ? defaultStorage.speedStep : Number(speedStep)
 
+  // Empty value is allowed and means "no preset buttons".
+  var presetSpeeds = presetSpeedsRaw
+    .split(',')
+    .map(function (s) { return Number(s.trim()) })
+    .filter(function (n) { return !isNaN(n) && n > 0 && n <= 16 })
+    .join(', ')
+
   browser.storage.sync
     .set({
       speedStep: speedStep,
@@ -47,6 +56,7 @@ function onSave() {
       mouseInvert: mouseInvert,
       allowMouseWheel: allowMouseWheel,
       rememberSpeed: rememberSpeed,
+      presetSpeeds: presetSpeeds,
     })
     .then(function () {
       var statusElem = document.getElementById('status')
@@ -67,6 +77,7 @@ function loadFromStorage() {
     document.getElementById('allowMouseWheel').checked = store.allowMouseWheel
     document.getElementById('mouseInvert').checked = store.mouseInvert
     document.getElementById('rememberSpeed').checked = store.rememberSpeed
+    document.getElementById('presetSpeeds').value = store.presetSpeeds
   })
 }
 
