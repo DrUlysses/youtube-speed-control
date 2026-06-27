@@ -52,19 +52,19 @@
             <div>
               <div class="row">
                 Decrease speed
-                <select id="slowerKeyInput"></select>
+                <input id="slowerKeyInput" type="text" />
               </div>
               <div class="row">
                 Increase speed
-                <select id="fasterKeyInput"></select>
+                <input id="fasterKeyInput" type="text" />
               </div>
               <div class="row">
                 Reset speed
-                <select id="resetKeyInput"></select>
+                <input id="resetKeyInput" type="text" />
               </div>
               <div class="row">
                 Speed Change Step
-                <input id="speedStep" type="text" value="" />
+                <input id="speedStep" type="number" step="0.05" min="0" max="1" />
               </div>
               <div class="row">
                 Preset Speed Buttons (comma-separated, e.g. 1, 1.5, 2)

@@ -1,8 +1,8 @@
 var defaultStorage = {
   speedStep: 0.25,
-  slowerKeyCode: '109,189,173',
-  fasterKeyCode: '107,187,61',
-  resetKeyCode: '106',
+  slowerKey: '-',
+  fasterKey: '+',
+  resetKey: '*',
   displayOption: 'InPlayerControls',
   allowMouseWheel: true,
   mouseInvert: false,
@@ -10,48 +10,31 @@ var defaultStorage = {
   presetSpeeds: '1.5, 2',
 }
 
-function keyPressHandler(event) {
-  var kCode = String.fromCharCode(event.keyCode)
-  if (!/[\d\.]$/.test(kCode) || !/^\d+(\.\d*)?$/.test(event.target.value + kCode)) {
-    event.preventDefault()
-    event.stopPropagation()
-  }
-}
-
 function onSave() {
-  var displayValue
-  var speedStep = document.getElementById('speedStep').value
-  var slowerKeyInput = document.getElementById('slowerKeyInput').value
-  var fasterKeyInput = document.getElementById('fasterKeyInput').value
-  var resetKeyInput = document.getElementById('resetKeyInput').value
+  var speedStep = document.getElementById('speedStep').valueAsNumber
+  var slowerKey = document.getElementById('slowerKeyInput').value
+  var fasterKey = document.getElementById('fasterKeyInput').value
+  var resetKey = document.getElementById('resetKeyInput').value
   var allowMouseWheel = document.getElementById('allowMouseWheel').checked
   var mouseInvert = document.getElementById('mouseInvert').checked
   var rememberSpeed = document.getElementById('rememberSpeed').checked
   var presetSpeedsRaw = document.getElementById('presetSpeeds').value
-  var displayOption = document.getElementsByName('displayOption')
+  var displayValue = document.querySelector('input[name="displayOption"]:checked').value
 
-  for (var i = 0, length = displayOption.length; i < length; i++) {
-    if (displayOption[i].checked) {
-      displayValue = displayOption[i].value
-      break
-    }
-  }
+  speedStep = isNaN(speedStep) ? defaultStorage.speedStep : speedStep
 
-  speedStep = isNaN(speedStep) ? defaultStorage.speedStep : Number(speedStep)
-
-  // Empty value is allowed and means "no preset buttons".
   var presetSpeeds = presetSpeedsRaw
     .split(',')
-    .map(function (s) { return Number(s.trim()) })
-    .filter(function (n) { return !isNaN(n) && n > 0 && n <= 16 })
+    .map(s => Number(s.trim()))
+    .filter(n => !isNaN(n) && n > 0 && n <= 16)
     .join(', ')
 
   browser.storage.sync
     .set({
       speedStep: speedStep,
-      slowerKeyCode: slowerKeyInput,
-      fasterKeyCode: fasterKeyInput,
-      resetKeyCode: resetKeyInput,
+      slowerKey: slowerKey,
+      fasterKey: fasterKey,
+      resetKey: resetKey,
       displayOption: displayValue,
       mouseInvert: mouseInvert,
       allowMouseWheel: allowMouseWheel,
@@ -69,10 +52,10 @@ function onSave() {
 
 function loadFromStorage() {
   browser.storage.sync.get(defaultStorage).then(function (store) {
-    document.getElementById('speedStep').value = store.speedStep.toFixed(2)
-    document.getElementById('slowerKeyInput').value = store.slowerKeyCode
-    document.getElementById('fasterKeyInput').value = store.fasterKeyCode
-    document.getElementById('resetKeyInput').value = store.resetKeyCode
+    document.getElementById('speedStep').value = Number(store.speedStep).toFixed(2)
+    document.getElementById('slowerKeyInput').value = store.slowerKey
+    document.getElementById('fasterKeyInput').value = store.fasterKey
+    document.getElementById('resetKeyInput').value = store.resetKey
     document.getElementById(store.displayOption).checked = true
     document.getElementById('allowMouseWheel').checked = store.allowMouseWheel
     document.getElementById('mouseInvert').checked = store.mouseInvert
@@ -96,32 +79,8 @@ function resetStorage() {
 function handleDOMContentLoaded() {
   document.getElementById('save').addEventListener('click', onSave)
   document.getElementById('restore').addEventListener('click', resetStorage)
-  document.getElementById('speedStep').addEventListener('keypress', keyPressHandler)
 
-  var fasterKeySelect = document.getElementById('fasterKeyInput')
-  var slowerKeySelect = document.getElementById('slowerKeyInput')
-  var resetKeySelect = document.getElementById('resetKeyInput')
-
-  fetch('keycodedict.json')
-    .then((response) => {
-      return response.json()
-    })
-    .then((keyDict) => {
-      fasterKeySelect.innerHTML = ''
-      slowerKeySelect.innerHTML = ''
-      resetKeySelect.innerHTML = ''
-
-      keyDict.keycodedict.forEach(function (element) {
-        fasterKeySelect.append(new Option(element.input, element.keycode))
-        slowerKeySelect.append(new Option(element.input, element.keycode))
-        resetKeySelect.append(new Option(element.input, element.keycode))
-      })
-
-      loadFromStorage()
-    })
-    .catch((err) => {
-      console.error(err)
-    })
+  loadFromStorage()
 }
 
 document.addEventListener('DOMContentLoaded', handleDOMContentLoaded)

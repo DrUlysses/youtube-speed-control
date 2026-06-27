@@ -1,4 +1,5 @@
-.PlayBackRatePanel {
+.PlayBackRatePanel,
+.PlayBackRatePanelFullScreen {
   color: #cfcfcf;
   font-size: 14px;
   z-index: 999999;
@@ -10,14 +11,7 @@
 }
 
 .PlayBackRatePanelFullScreen {
-  color: #cfcfcf;
-  font-size: 14px;
-  z-index: 999999;
-  position: absolute;
   right: 60px;
-  top: 2px;
-  display: inline;
-  height: 24px;
 }
 
 .ytdMiniplayerComponentHost .PlayBackRatePanel {
@@ -38,11 +32,7 @@
 }
 
 .ysc-btn-left {
-  -moz-border-radius-topleft: 5px;
-  -webkit-border-top-left-radius: 5px;
   border-top-left-radius: 5px;
-  -moz-border-radius-bottomleft: 5px;
-  -webkit-border-bottom-left-radius: 5px;
   border-bottom-left-radius: 5px;
 }
 
@@ -50,11 +40,7 @@
    button gets them via .ysc-btn-preset-last instead. */
 
 .ysc-btn-preset-last {
-  -moz-border-radius-topright: 5px;
-  -webkit-border-top-right-radius: 5px;
   border-top-right-radius: 5px;
-  -moz-border-radius-bottomright: 5px;
-  -webkit-border-bottom-right-radius: 5px;
   border-bottom-right-radius: 5px;
 }
 
