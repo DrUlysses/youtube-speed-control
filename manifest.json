@@ -30,7 +30,7 @@
   "content_scripts": [
     {
       "all_frames": true,
-      "matches": ["http://www.youtube.com/*", "https://www.youtube.com/*"],
+      "matches": ["*://*/*"],
       "css": ["css/inject.css"],
       "js": ["src/inject/inject.js"]
     }
